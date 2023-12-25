@@ -1,0 +1,261 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<!-- Credits to https://codepen.io/bdonberger/pen/WNbVeWd for the microwave design -->
+<head>
+    <meta charset="UTF-8">
+    <title>Virtual Microwave</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Space+Mono">
+    <style>
+        html, body {
+            display: flex;
+            height: 100%;
+            margin: 0 auto;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .microwave-container{
+            width: 1200px;
+            height: 550px;
+        }
+
+        .microwave-container .microwave {
+            width: 100%;
+            height: 100%;
+            background-color: grey;
+            display: flex;
+            border-radius: 10px;
+        }
+
+        .microwave-container .microwave .door-container {
+            width: 80%;
+            height: 100%;
+        }
+
+        .microwave-container .microwave .door-container .door {
+            height: 100%;
+            width: 100%;
+            border-right: solid 7px black;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            position: relative;
+        }
+
+        .microwave-container .microwave .door-container .door .handle {
+            position: absolute;
+            height: 90%;
+            width: 50px;
+            background-color: silver;
+            right: 2.5%;
+            cursor: pointer;
+        }
+
+        .microwave-container .microwave .door-container .door .window-container {
+            height: 80%;
+            width: 95%;
+            background-color:#000000d9;
+            display: flex;
+            align-items: center;
+        }
+
+        .microwave-container .microwave .door-container .door .window-container .window {
+            height: 80%;
+            width: 80%;
+            background-color: silver;
+            margin-left: 5%;
+            background-image: url(https://i.imgur.com/B9zlMvv.png);
+            background-repeat: no-repeat;
+            background-size: cover;
+            overflow: hidden;
+        }
+
+        .microwave-container .microwave .control-panel-container {
+            width: 20%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .microwave-container .microwave .control-panel-container .control-panel {
+            background-color: #000000d9;
+            height: 80%;
+            width: 90%;
+        }
+
+        .microwave-container .microwave .control-panel-container .control-panel .clock {
+            height: 40px;
+            width: 100%;
+            text-align: center;
+            color: green;
+            font-family: monospace;
+            font-size: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .control-panel .controls {
+            width: 85%;
+            height: 88%;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .control-panel .controls .control-row {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        .control-panel .controls .control-row.no-border .button{
+            border: none;
+        }
+
+        .control-panel .controls .control-row .button {
+            width: 28%;
+            font-size:11px;
+            text-align: center;
+            font-family: sans-serif;
+            height: 30px;
+            color: white;
+            border: solid 1px white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .control-panel .controls .control-row .button span.smallText {
+            font-size:6px;
+        }
+
+        .light {
+            height: 0px;
+            width: 80%;
+            box-shadow: 0px 42px 92px 14px #ffd400;
+            z-index: -1;
+            display: none;
+        }
+
+        .inside-light {
+            height: 0px;
+            width: 100%;
+            box-shadow: 0px 152px 1004px 84px #ffd40082;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="microwave-container">
+        <div class="microwave">
+            <div class="door-container">
+                <div class="door">
+                    <div class="window-container">
+                        <div class="window">
+                            <div class="inside-light"> </div>
+                        </div>
+                    </div>
+                    <div class="handle button" data-function="open">
+                    </div>
+                </div>
+            </div>
+            <div class="control-panel-container">
+                <div class="control-panel">
+                    <div class="clock">
+                        <p id="time"></p>
+                    </div>
+                    <div class="controls">
+                        <div class="control-row">
+                            <div class="button" data-function="cook">
+                                <span>cook<br /><span class="smallText">time</span>
+                            </div>
+                            <div class="button" data-function="popcorn">
+                                <span>popcorn</span>
+                            </div>
+                            <div class="button" data-function="potato">
+                                <span>potato<br /><span class="smallText">weight</span>
+                            </div>
+                        </div>
+                        <div class="control-row">
+                            <div class="button" data-function="reheat">
+                                <span>reheat<br /><span class="smallText">time</span>
+                            </div>
+                            <div class="button" data-function="defrost">
+                                <span>defrost<br /><span class="smallText">weight</span>
+                            </div>
+                            <div class="button" data-function="beverage">
+                                <span>beverage<br /><span class="smallText">volume</span>
+                            </div>
+                        </div>
+                        <div class="control-row no-border">
+                            <div class="button" data-function="one">
+                                <span>1</span>
+                            </div>
+                            <div class="button" data-function="two">
+                                <span>2</span>
+                            </div>
+                            <div class="button" data-function="three">
+                                <span>3</span>
+                            </div>
+                        </div>
+                        <div class="control-row no-border">
+                            <div class="button" data-function="four">
+                                <span>4</span>
+                            </div>
+                            <div class="button" data-function="five">
+                                <span>5</span>
+                            </div>
+                            <div class="button" data-function="six">
+                                <span>6</span>
+                            </div>
+                        </div>
+                        <div class="control-row no-border">
+                            <div class="button" data-function="seven">
+                                <span>7</span>
+                            </div>
+                            <div class="button" data-function="eight">
+                                <span>8</span>
+                            </div>
+                            <div class="button" data-function="nine">
+                                <span>9</span>
+                            </div>
+                        </div>
+                        <div class="control-row no-border">
+                            <div class="button" data-function="stop">
+                                <span>stop<br><span class="smallText">cancel</span></span>
+                            </div>
+                            <div class="button" data-function="zero">
+                                <span>0</span>
+                            </div>
+                            <div class="button" data-function="start">
+                                <span>start <br /><span class="smallText">+ 30 sec</span></span>
+                            </div>
+                        </div>
+
+                        <div class="control-row no-border">
+                            <div class="button">
+                                <span>exhaust<br /><span class="smallText">high - lo - off</span></span>
+                            </div>
+                            <div class="button">
+                                <span></span>
+                            </div>
+                            <div class="button" data-function="light">
+                                <span>light<br /><span class="smallText">on - off</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="light"> </div>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <script src="https://momentjs.com/downloads/moment.js"></script>
+    <script src="js/microwave.js"></script>
+</body>
+</html>

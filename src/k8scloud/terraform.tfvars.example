@@ -1,0 +1,17 @@
+# Project ID
+project = ""
+
+# Define the default number of Nodes for the cluster
+workers_count = ""
+
+# Define the Region/Zone
+# Regions list is found at:
+# https://cloud.google.com/compute/docs/regions-zones/regions-zones?hl=en_US
+region = ""
+
+# Registry url, username and personal token
+# Token should have read_registry and write_registry scopes
+registry-server = ""
+registry-username = ""
+registry-token = ""
+

@@ -1,0 +1,41 @@
+# The Caddyfile is an easy way to configure your Caddy web server.
+#
+# Unless the file starts with a global options block, the first
+# uncommented line is always the address of your site.
+#
+# To use your own domain name (with automatic HTTPS), first make
+# sure your domain's A/AAAA DNS records are properly pointed to
+# this machine's public IP, then replace ":80" below with your
+# domain name.
+
+:80 {
+	# Set this path to your site's directory.
+	root * /usr/share/caddy
+
+    handle /api/beverage-service {
+        uri strip_prefix /api/beverage-service
+        reverse_proxy beverage-service
+    }
+
+    handle /api/defrost-service {
+        uri strip_prefix /api/defrost-service
+        reverse_proxy defrost-service
+    }
+
+    handle /api/popcorn-service {
+        uri strip_prefix /api/popcorn-service
+        reverse_proxy popcorn-service
+    }
+
+    handle /api/potato-service {
+        uri strip_prefix /api/potato-service
+        reverse_proxy potato-service
+    }
+
+    handle {
+        file_server
+    }
+}
+
+# Refer to the Caddy docs for more information:
+# https://caddyserver.com/docs/caddyfile

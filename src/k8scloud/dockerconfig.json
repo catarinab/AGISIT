@@ -1,0 +1,7 @@
+{
+  "auths": {
+    "${registry-server}": {
+      "auth": "${auth}"
+    }
+  }
+}
